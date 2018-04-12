@@ -3,4 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="grade_percentage">Grade Percentage</string>
     <string name="class_weight">Class Weight</string>
+    <string name="credit_hours">Credit Hours</string>
+    <string name="generate_gpa">Generate GPA</string>
 </resources>
