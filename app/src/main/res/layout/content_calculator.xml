@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background=" #e6e6e6 "
     android:minHeight="142dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".Calculator"
@@ -19,6 +20,7 @@
         app:layout_constraintGuide_percent=".5" />
 
     <LinearLayout
+        android:id="@+id/gp_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="8dp"
@@ -40,46 +42,13 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/grade_percentage"
-            android:textSize="21sp" />
+            android:textColor=" #4d4d4d "
+            android:textSize="30sp" />
 
-        <EditText
-            android:id="@+id/perc1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/perc2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/perc3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/perc4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:textAlignment="center"
-            android:textSize="25sp" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/cr_layout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginEnd="8dp"
@@ -100,43 +69,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical|center_horizontal"
             android:text="@string/credit_hours"
-            android:textSize="21sp" />
-
-        <EditText
-            android:id="@+id/cw1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/cw2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/cw3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:textAlignment="center"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/cw4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            android:textAlignment="center"
-            android:textSize="25sp" />
+            android:textColor=" #4d4d4d "
+            android:textSize="30sp" />
 
 
     </LinearLayout>
@@ -157,29 +91,17 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:background="#59a5cb"
         android:text="@string/generate_gpa"
         android:textAlignment="center"
+        android:textColor=" #4d4d4d "
         android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline20"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline19"
-        app:layout_constraintTop_toTopOf="@+id/guideline18" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addGrade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline20"
         app:layout_constraintTop_toTopOf="@+id/guideline18"
-        app:srcCompat="@android:drawable/ic_input_add"
-        android:focusable="true" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline19"
@@ -196,5 +118,35 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent=".65" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/remove_grade_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        app:backgroundTint="#59a5cb"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/add_grade_button"
+        app:layout_constraintStart_toStartOf="@+id/guideline20"
+        app:layout_constraintTop_toTopOf="@+id/guideline18"
+        app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/add_grade_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="48dp"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        app:backgroundTint="#59a5cb"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline18"
+        app:srcCompat="@android:drawable/ic_menu_add" />
 
 </android.support.constraint.ConstraintLayout>

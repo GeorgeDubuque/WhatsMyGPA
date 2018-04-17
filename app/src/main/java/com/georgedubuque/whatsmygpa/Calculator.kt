@@ -1,13 +1,18 @@
 package com.georgedubuque.whatsmygpa
 
 import android.os.Bundle
+import android.os.Debug
+import android.os.PersistableBundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.text.InputType
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_calculator.*
@@ -16,14 +21,36 @@ import java.text.DecimalFormat
 
 class Calculator : AppCompatActivity() {
 
+    var gpArray = ArrayList<EditText>()
+    var chArray = ArrayList<EditText>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("debug","creating")
         setContentView(R.layout.activity_calculator)
         setSupportActionBar(toolbar)
-
-//        GpaButton.setOnClickListener { Toast.makeText (
-//                this@Calculator, "GPA Button Pressed", Toast.LENGTH_SHORT).show()}
         GpaButton.setOnClickListener {generateGPA()}
+        add_grade_button.setOnClickListener { addGrade() }
+        remove_grade_button.setOnClickListener { removeGrade() }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle?) {
+        Log.d("debug","savingInstanceState")
+        super.onSaveInstanceState(outState)
+        if(outState != null) {
+            outState.putSerializable("gpArray", gpArray)
+            outState.putSerializable("chArray", chArray)
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+        Log.d("debug","restoring instance state")
+        if(savedInstanceState != null) {
+            gpArray = (savedInstanceState.getSerializable("gpArray") as ArrayList<EditText>)
+            chArray = (savedInstanceState.getSerializable("chArray") as ArrayList<EditText>)
+            //repopulateText()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -42,21 +69,79 @@ class Calculator : AppCompatActivity() {
         }
     }
 
+    fun repopulateText(){
+            Log.d("debug","gpArray.size")
+
+            for (x in 1 until gpArray.size) {
+                addGrade()
+            }
+
+    }
+
+    fun addGrade(){
+        val gradeLayout = gp_layout
+        val chLayout = cr_layout
+
+        val gText = EditText(this)
+        val cText = EditText(this)
+
+        makeChText(cText)
+        makeGpText(gText)
+
+        gpArray.add(gText)
+        chArray.add(cText)
+
+        gradeLayout.addView(gText)
+        chLayout.addView(cText)
+
+    }
+
+    fun removeGrade(){
+        if(gpArray.size > 0) {
+            gp_layout.removeView(gpArray[gpArray.size - 1])
+            gpArray.removeAt(gpArray.size - 1)
+            cr_layout.removeView(chArray[chArray.size - 1])
+            chArray.removeAt(chArray.size - 1)
+        }
+    }
+
+    fun makeGpText(input: EditText){
+        input.inputType = 8194
+        input.setEms(10)
+        input.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        input.setTextSize(25f)
+    }
+
+    fun makeChText(input: EditText) {
+        input.inputType = InputType.TYPE_CLASS_NUMBER
+        input.setEms(10)
+        input.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        input.setTextSize(25f)
+    }
+
     fun generateGPA(){
-        var gp1 = toGradePoint(perc1.text.toString().toDouble())
-        var gp2 = toGradePoint(perc2.text.toString().toDouble())
-        var gp3 = toGradePoint(perc3.text.toString().toDouble())
-        var gp4 = toGradePoint(perc4.text.toString().toDouble())
+        var gp : String
+        var ch : String
+        var totalGradePoints = 0.0
+        var totalCreditHours  = 0
+        var gpa : Double
 
-        var cw1 = cw1.text.toString().toInt()
-        var cw2 = cw2.text.toString().toInt()
-        var cw3 = cw3.text.toString().toInt()
-        var cw4 = cw4.text.toString().toInt()
+        for(x in 0 until gpArray.size){
+            gp = gpArray[x].text.toString()
+            ch = chArray[x].text.toString()
+            if(gp.isNotEmpty() && ch.isNotEmpty()) {
+                Log.d("DEBUG", ch)
+                Log.d("DEBUG", gp)
 
-        var totalGradePoints = gp1*cw1 + gp2*cw2 + gp3*cw3 + gp4*cw4
-        var totalCreditHours = cw1 + cw2 + cw3 + cw4
+                totalGradePoints += toGradePoint(gp.toDouble()) * ch.toInt()
+                totalCreditHours += ch.toInt()
+            }
 
-        Toast.makeText(this@Calculator, (totalGradePoints/totalCreditHours).toString(), Toast.LENGTH_SHORT).show()
+        }
+
+        gpa = totalGradePoints/totalCreditHours
+
+        Toast.makeText(this@Calculator, gpa.toString(), Toast.LENGTH_SHORT).show()
     }
 
     fun toGradePoint(decimalGrade: Double):Double{
@@ -90,8 +175,6 @@ class Calculator : AppCompatActivity() {
         return gradePoint
     }
 
-    fun addGrade(){
-        Toast.makeText(this@Calculator, "Need to add grade.", Toast.LENGTH_LONG).show()
-    }
+
 
 }
